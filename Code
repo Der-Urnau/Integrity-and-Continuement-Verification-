@@ -1,2 +1,17 @@
-#The main code will be storaged here
+# The main code will be storaged here
 # SHA-256
+
+import hashlib		# Importa a ferramenta criptografica padrao do Python
+
+def gerar_hash(arquivo): 
+    """
+    Calcula o SHA-256 de um arquivo.
+    Lê o arquivo em blocos para evitar consumo excessivo de memória.
+    """
+    hash_obj = hashlib.sha256()		# Inicia o algoritmo SHA-256
+    
+    with open(arquivo, 'rb') as f: 	# Analisa o arquivo em blocos de 4096 bytes (4KB) #Atualiza o cálculo do hash a cada bloco analisado
+        for chunk in iter(lambda: f.read(4096), b""):
+            hash_obj.update(chunk)
+            
+    return hash_obj.hexdigest()  # Converte o hash interno (binário) em hexadecimal legível
